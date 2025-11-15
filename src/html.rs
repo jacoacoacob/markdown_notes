@@ -7,7 +7,6 @@ const STYLES: &str = r#"
 body {
     color: #222;
     display: flex;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 18px;
     font-weight: 300;
     justify-content: center;
@@ -70,6 +69,15 @@ hr {
     background-color: #223;
     color: #dddddd;
 }
+.font--sans {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.font--serif {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.font--mono {
+    font-family: 'Courier New', Courier, monospace;
+}
 .md h1,
 .md h2,
 .md h3,
@@ -122,10 +130,16 @@ hr {
 const SCRIPT: &str = r#"
 
 const DEFAULT_THEME = 'light';
+const THEME_OPTIONS = ['light', 'dark'];
+
+const DEFAULT_FONT = 'sans';
+const FONT_OPTIONS = ['sans', 'serif', 'mono'];
 
 const themeSelect = document.getElementById('theme-select');
+const fontSelect = document.getElementById('font-select');
 
 themeSelect.addEventListener('change', onChangeThemeSelect);
+fontSelect.addEventListener('change', onChangeFontSelect);
 
 onPageLoad();
 
@@ -139,6 +153,11 @@ function onPageLoad() {
         anchorElement.setAttribute('rel', 'noopener noreferrer');
     });
 
+    initializeTheme();
+    initializeFont();
+}
+
+function initializeTheme() {
     let savedTheme = getSavedTheme();
     if (!savedTheme) {
         setSavedTheme(DEFAULT_THEME);
@@ -157,12 +176,47 @@ function setSavedTheme(themeName) {
 }
 
 function setDocumentTheme(themeName) {
-    document.body.setAttribute('class', `theme--${themeName}`);
+    THEME_OPTIONS.forEach((theme) => {
+        document.body.classList.remove(`theme--${theme}`);
+    });
+
+    document.body.classList.add(`theme--${themeName}`);
 }
 
-function onChangeThemeSelect(event) {
+function onChangeThemeSelect() {
     setSavedTheme(themeSelect.value);
     setDocumentTheme(themeSelect.value);
+}
+
+function initializeFont() {
+    let savedFont = getSavedFont();
+    if (!savedFont) {
+        setSavedFont(DEFAULT_FONT);
+        savedFont = getSavedFont();
+    }
+    fontSelect.value = savedFont;
+    setDocumentFont(savedFont);
+}
+
+function getSavedFont() {
+    return localStorage.getItem('md_notes_font');
+}
+
+function setSavedFont(fontName) {
+    localStorage.setItem('md_notes_font', fontName);
+}
+
+function setDocumentFont(fontName) {
+    FONT_OPTIONS.forEach((font) => {
+        document.body.classList.remove(`font--${font}`);
+    });
+
+    document.body.classList.add(`font--${fontName}`);
+}
+
+function onChangeFontSelect() {
+    setSavedFont(fontSelect.value);
+    setDocumentFont(fontSelect.value);
 }
 
 "#;
@@ -187,8 +241,13 @@ r#"
         <main>
             <div class="toolbar">
                 <select id="theme-select">
-                    <option value="light">Light</option>
-                    <option value="dark">Dark</option>
+                    <option value="light">light</option>
+                    <option value="dark">dark</option>
+                </select>
+                <select id="font-select">
+                    <option value="mono">mono</option>
+                    <option value="sans">sans-serif</option>
+                    <option value="serif">serif</option>
                 </select>
             </div>
             <div>
