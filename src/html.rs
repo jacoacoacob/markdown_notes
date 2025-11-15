@@ -168,8 +168,11 @@ function onChangeThemeSelect(event) {
 "#;
 
 pub fn md_to_html(title: &str, body_content: &str) -> String {
-    let mut options = comrak::ComrakOptions::default();
+    let mut options = comrak::Options::default();
+    options.extension.tasklist = true;
+    options.extension.table = true;
     options.extension.header_ids = Some("".to_string());
+    options.render.r#unsafe = true;
     format!(
 r#"
 <!DOCTYPE html>

@@ -7,7 +7,6 @@ use crate::utils::extract_filename;
 pub struct Args {
     pub input: String,
     pub output_dir: String,
-    pub output_file: String,
     pub is_verbose: bool,
 }
 
@@ -18,7 +17,6 @@ impl Args {
         let mut args = Args {
             input: String::new(),
             output_dir: String::from("./output"),
-            output_file: String::new(),
             is_verbose: false,
         };
 
