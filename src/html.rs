@@ -78,6 +78,21 @@ hr {
 .font--mono {
     font-family: 'Courier New', Courier, monospace;
 }
+.md .anchor::before {
+    content: '#';
+    right: 20px;
+    position: absolute;
+    visibility: hidden;
+}
+.md h1:hover .anchor::before,
+.md h2:hover .anchor::before,
+.md h3:hover .anchor::before,
+.md h4:hover .anchor::before,
+.md h5:hover .anchor::before,
+.md h6:hover .anchor::before {
+    visibility: visible;
+}
+
 .md h1,
 .md h2,
 .md h3,
@@ -87,6 +102,8 @@ hr {
 .md p {
     line-height: 1.4;
     margin: 20px 0;
+    position: relative;
+    padding-left: -20px;
 }
 .md p img {
     width: 100%;
@@ -250,7 +267,7 @@ r#"
                     <option value="serif">serif</option>
                 </select>
             </div>
-            <div>
+            <div class='md'>
                 {}
             </div>
         </main>
