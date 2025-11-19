@@ -18,17 +18,17 @@ main {
     width: 710px;
 }
 a {
-    color: rgb(58, 128, 131);
+    color: rgb(237, 26, 255);
     font: inherit;
 }
 a:visited {
-    color: rgb(58, 128, 131);
+    color: rgb(237, 26, 255);
 }
 .theme--dark a {
-    color: rgb(98, 168, 171);
+    color: rgb(242, 85, 255);
 }
 .theme--dark a:visited {
-    color: rgb(98, 168, 171);
+    color: rgb(242, 85, 255);
 }
 strong {
     font-weight: bold;
@@ -47,7 +47,7 @@ blockquote {
     margin: 0;
     padding-left: 20px;
 }
-.theme--dark blockquote {
+.theme--dark .md blockquote {
     border-color: #aaa;
     color: #ccc;
 }
@@ -76,7 +76,10 @@ hr {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 .font--mono {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
 }
 .md .anchor::before {
     content: '#';
@@ -252,6 +255,9 @@ r#"
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=M+PLUS+1+Code:wght@100..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
         <style>{}</style>
     </head>
     <body>
