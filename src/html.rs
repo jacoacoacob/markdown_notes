@@ -1,5 +1,3 @@
-
-
 const STYLES: &str = r#"
 * {
     box-sizing: border-box;
@@ -153,13 +151,16 @@ const DEFAULT_THEME = 'light';
 const THEME_OPTIONS = ['light', 'dark'];
 
 const DEFAULT_FONT = 'sans';
+const DEFAULT_FONT_SIZE = 16;
 const FONT_OPTIONS = ['sans', 'serif', 'mono'];
 
 const themeSelect = document.getElementById('theme-select');
 const fontSelect = document.getElementById('font-select');
+const fontSizeInput = document.getElementById('font-size-input');
 
 themeSelect.addEventListener('change', onChangeThemeSelect);
 fontSelect.addEventListener('change', onChangeFontSelect);
+fontSizeInput.addEventListener('input', onInputFontSize);
 
 onPageLoad();
 
@@ -175,6 +176,7 @@ function onPageLoad() {
 
     initializeTheme();
     initializeFont();
+    initializeFontSize();
 }
 
 function initializeTheme() {
@@ -239,6 +241,33 @@ function onChangeFontSelect() {
     setDocumentFont(fontSelect.value);
 }
 
+function initializeFontSize() {
+  let savedFontSize = getSavedFontSize();
+  if (!savedFontSize) {
+    setSavedFontSize(DEFAULT_FONT_SIZE);
+    savedFontSize = getSavedFontSize();
+  }
+  fontSizeInput.value = savedFontSize;
+  setDocumentFontSize(savedFontSize);
+}
+
+function getSavedFontSize() {
+  return localStorage.getItem('md_notes_font_size');
+}
+
+function setSavedFontSize(fontSize) {
+  localStorage.setItem('md_notes_font_size', fontSize);
+}
+
+function setDocumentFontSize(fontSize) {
+  document.body.style.fontSize = `${fontSize}px`;
+}
+
+function onInputFontSize() {
+  setSavedFontSize(fontSizeInput.value);
+  setDocumentFontSize(fontSizeInput.value);
+}
+
 "#;
 
 pub fn md_to_html(title: &str, body_content: &str) -> String {
@@ -248,7 +277,7 @@ pub fn md_to_html(title: &str, body_content: &str) -> String {
     options.extension.header_ids = Some("".to_string());
     options.render.r#unsafe = true;
     format!(
-r#"
+        r#"
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -272,6 +301,7 @@ r#"
                     <option value="sans">sans-serif</option>
                     <option value="serif">serif</option>
                 </select>
+                <input type="number" id="font-size-input" />
             </div>
             <div class='md'>
                 {}
@@ -283,10 +313,7 @@ r#"
 "#,
         title,
         STYLES,
-        comrak::markdown_to_html(
-            &body_content,
-            &options
-        ),
+        comrak::markdown_to_html(&body_content, &options),
         SCRIPT
     )
 }
