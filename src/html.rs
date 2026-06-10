@@ -5,8 +5,6 @@ const STYLES: &str = r#"
 body {
     color: #222;
     display: flex;
-    font-size: 18px;
-    font-weight: 300;
     justify-content: center;
     line-height: 1.3;
     margin: 0 16px;
@@ -41,7 +39,6 @@ code {
 blockquote {
     border-left: 4px solid #aaa;
     color: #444;
-    font-size: 16px;
     margin: 0;
     padding-left: 20px;
 }
@@ -52,12 +49,17 @@ blockquote {
 hr {
     border-bottom: none;
     border-color: #aeaeae;
-    margin: 40px 0;
+    margin: 2rem 0;
 }
 .toolbar {
     display: flex;
     justify-content: flex-end;
     padding: 4px 0;
+}
+@media print {
+    .toolbar {
+        display: none;
+    }
 }
 .theme--light {
     color: #333333;
@@ -101,25 +103,12 @@ hr {
 .md h5,
 .md h6,
 .md p {
-    line-height: 1.4;
     margin: 20px 0;
     position: relative;
     padding-left: -20px;
 }
 .md p img {
     width: 100%;
-}
-.md h1 {
-    font-size: 28px;
-}
-.md h2 {
-    font-size: 24px;
-}
-.md h3 {
-    font-size: 20px;
-}
-.md h4{
-    font-size: 16px;
 }
 .md hr {
     border: none;
@@ -199,10 +188,10 @@ function setSavedTheme(themeName) {
 
 function setDocumentTheme(themeName) {
     THEME_OPTIONS.forEach((theme) => {
-        document.body.classList.remove(`theme--${theme}`);
+        document.documentElement.classList.remove(`theme--${theme}`);
     });
 
-    document.body.classList.add(`theme--${themeName}`);
+    document.documentElement.classList.add(`theme--${themeName}`);
 }
 
 function onChangeThemeSelect() {
@@ -230,10 +219,10 @@ function setSavedFont(fontName) {
 
 function setDocumentFont(fontName) {
     FONT_OPTIONS.forEach((font) => {
-        document.body.classList.remove(`font--${font}`);
+        document.documentElement.classList.remove(`font--${font}`);
     });
 
-    document.body.classList.add(`font--${fontName}`);
+    document.documentElement.classList.add(`font--${fontName}`);
 }
 
 function onChangeFontSelect() {
@@ -260,7 +249,7 @@ function setSavedFontSize(fontSize) {
 }
 
 function setDocumentFontSize(fontSize) {
-  document.body.style.fontSize = `${fontSize}px`;
+  document.documentElement.style.fontSize = `${fontSize}px`;
 }
 
 function onInputFontSize() {
