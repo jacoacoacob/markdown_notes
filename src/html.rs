@@ -2,8 +2,10 @@ const STYLES: &str = r#"
 * {
     box-sizing: border-box;
 }
-body {
+html {
     color: #222;
+}
+body {
     display: flex;
     justify-content: center;
     line-height: 1.3;
@@ -66,8 +68,8 @@ hr {
     background-color: #efefef;
 }
 .theme--dark {
-    background-color: #223;
-    color: #dddddd;
+    background-color: #1b1b27;
+    color: #c5c4c4;
 }
 .font--sans {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -140,8 +142,8 @@ hr {
 }
 @media (prefers-color-scheme: dark) {
   .theme--system {
-    background-color: #223;
-    color: #dddddd;
+    background-color: #1b1b27;
+    color: #c5c4c4;
   }
   .theme--system a {
       color: rgb(242, 85, 255);
