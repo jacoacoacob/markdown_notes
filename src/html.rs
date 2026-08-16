@@ -82,8 +82,6 @@ hr {
     font-style: normal;
 }
 .md .anchor::before {
-    content: '#';
-    right: 20px;
     position: absolute;
     visibility: hidden;
 }
@@ -94,6 +92,9 @@ hr {
 .md h5:hover .anchor::before,
 .md h6:hover .anchor::before {
     visibility: visible;
+    content: '#';
+    left: -32px;
+    width: 32px;
 }
 
 .md h1,
@@ -132,12 +133,33 @@ hr {
 .md li {
     margin: 4px 0;
 }
+@media print {
+  .toolbar {
+    display: none;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  .theme--system {
+    background-color: #223;
+    color: #dddddd;
+  }
+  .theme--system a {
+      color: rgb(242, 85, 255);
+  }
+  .theme--system a:visited {
+      color: rgb(242, 85, 255);
+  }
+  .theme--system .md blockquote {
+      border-color: #aaa;
+      color: #ccc;
+  }
+}
 "#;
 
 const SCRIPT: &str = r#"
 
-const DEFAULT_THEME = 'light';
-const THEME_OPTIONS = ['light', 'dark'];
+const DEFAULT_THEME = 'system';
+const THEME_OPTIONS = ['system', 'light', 'dark'];
 
 const DEFAULT_FONT = 'sans';
 const DEFAULT_FONT_SIZE = 16;
@@ -282,6 +304,7 @@ pub fn md_to_html(title: &str, body_content: &str) -> String {
         <main>
             <div class="toolbar">
                 <select id="theme-select">
+                    <option value="system">system</option>
                     <option value="light">light</option>
                     <option value="dark">dark</option>
                 </select>
