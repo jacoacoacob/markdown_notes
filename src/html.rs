@@ -80,8 +80,6 @@ hr {
     font-style: normal;
 }
 .md .anchor::before {
-    content: '#';
-    right: 20px;
     position: absolute;
     visibility: hidden;
 }
@@ -92,6 +90,9 @@ hr {
 .md h5:hover .anchor::before,
 .md h6:hover .anchor::before {
     visibility: visible;
+    content: '#';
+    left: -32px;
+    width: 32px;
 }
 
 .md h1,
